@@ -1,6 +1,6 @@
 class Beer < ApplicationRecord
   belongs_to :brewery
-  has_many :ratings
+  has_many :ratings, dependent: :destroy
 
   def average_rating
     sum = ratings.reduce(0) { |acc, cur| acc + cur.score }
