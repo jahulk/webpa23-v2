@@ -12,4 +12,10 @@ class Brewery < ApplicationRecord
     self.year = 2022
     puts "changed year to #{year}"
   end
+
+  def average_rating
+    avg = ratings.average('score')
+    avg.to_f
+  end
 end
+
