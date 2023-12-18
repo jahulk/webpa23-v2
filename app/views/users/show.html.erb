@@ -1,0 +1,31 @@
+<p style="color: green"><%= notice %></p>
+
+<div>
+  <h2>Username:</h2>
+  <p><%= @user.username %></p>
+  <% if @user.ratings.empty? %>
+    <p>Has not made any ratings yet!</p>
+  <% else %>
+    <p>Has made <%= pluralize(@user.ratings.count, 'ratings') %>, average rating <%= @user.average_rating %></p>
+  <% end %>
+</div>
+<div>
+  <h3>ratings</h3>
+  <ul>
+    <% @user.ratings.each do |rating| %>
+      <li>
+        <%= rating.to_s %>
+        <%= link_to "Delete", rating, data: {
+          "turbo-method": :delete,
+          "turbo_confirm": "Are you sure?"
+        } %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<div>
+  <%= link_to "Edit this user", edit_user_path(@user) %> |
+  <%= link_to "Back to users", users_path %>
+
+  <%= button_to "Destroy this user", @user, method: :delete %>
+</div>

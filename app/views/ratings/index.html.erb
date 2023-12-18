@@ -1,9 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
 <h2>List of ratings</h2>
 
 <ul>
   <% @ratings.each do |rating| %>
-    <li> <%= render rating %>
-      <%= button_to 'Delete', rating, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } } %>
+    <li>
+      <%= rating.to_s %>
+      <%= link_to rating.user.username, rating.user %>
     </li>
   <% end %>
 </ul>
