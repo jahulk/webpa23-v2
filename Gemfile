@@ -81,3 +81,5 @@ end
 group :development, :test do
   gem 'pry-byebug'
 end
+
+gem "dockerfile-rails", ">= 1.6", :group => :development
