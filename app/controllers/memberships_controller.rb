@@ -18,6 +18,7 @@ class MembershipsController < ApplicationController
 
   # GET /memberships/1/edit
   def edit
+    @beer_clubs = BeerClub.all.filter { |b| !b.members.include?(current_user) }
   end
 
   # POST /memberships or /memberships.json
@@ -38,6 +39,8 @@ class MembershipsController < ApplicationController
 
   # PATCH/PUT /memberships/1 or /memberships/1.json
   def update
+    @beer_clubs = BeerClub.all.filter { |b| !b.members.include?(current_user) }
+
     respond_to do |format|
       if @membership.update(membership_params)
         format.html { redirect_to membership_url(@membership), notice: "Membership was successfully updated." }

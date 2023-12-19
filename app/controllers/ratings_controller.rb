@@ -25,12 +25,13 @@ class RatingsController < ApplicationController
 
   def destroy
     rating = Rating.find(params[:id])
-    rating.delete
+    rating.delete if current_user == rating.user
 
-    respond_to do |format|
-      format.html { redirect_to ratings_path, notice: "Rating was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to user_path(current_user)
+
+    # respond_to do |format|
+    #   format.html { redirect_to ratings_path, notice: "Rating was successfully destroyed." }
+    #   format.json { head :no_content }
 
     # redirect_to ratings_path
   end
