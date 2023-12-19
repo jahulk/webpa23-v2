@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :username, uniqueness: true,
-            length: { minimum: 3, maximum: 30 }
+                       length: { minimum: 3, maximum: 30 }
 
   validates :password, length: { minimum: 4 }, format: { with: /\A(?=.*[A-Z])(?=.*[0-9]).{4,}\z/,
                                                          message: "must be atleast 4 characters and include one number and one uppercase letter" }
