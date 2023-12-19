@@ -10,6 +10,19 @@
   <% end %>
 </div>
 <div>
+  <p>
+    <strong>member of</strong>
+  </p>
+  <ul>
+    <% @user.beer_clubs.each do |beer_club| %>
+      <li id="<%= dom_id beer_club %>">
+        <%= link_to beer_club.name, beer_club %>
+      </li>
+    <% end %>
+  </ul>
+  <p>
+</div>
+<div>
   <h3>ratings</h3>
   <ul>
     <% @user.ratings.each do |rating| %>

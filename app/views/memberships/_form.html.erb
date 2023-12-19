@@ -1,0 +1,22 @@
+<% if @membership.new_record? && @beer_clubs.empty? %>
+  <p>No clubs available... :/</p>
+<% else %>
+  <%= form_with(model: membership) do |form| %>
+    <% if membership.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(membership.errors.count, "error") %> prohibited this membership from being saved:</h2>
+
+        <ul>
+          <% membership.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= form.select :user_id, options_for_select([[current_user.username, current_user.id]]) %>
+    <%= form.select :beer_club_id, options_from_collection_for_select(@beer_clubs, :id, :name) %>
+    <%= form.submit %>
+  <% end %>
+
+
+<% end %>
