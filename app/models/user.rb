@@ -31,4 +31,16 @@ class User < ApplicationRecord
         avg.to_f
       }.max_by { |_key, value| value }[0]
   end
+
+  def favorite_brewery
+    return nil if ratings.empty?
+
+    ratings
+      .group_by { |r| r.beer.brewery }
+      .transform_values { |value|
+        sum = value.reduce(0.to_d) { |acc, cur| acc + cur.score }
+        avg = value.empty? ? 0 : sum / value.count
+        avg.to_f
+      }.max_by { |_key, value| value }[0]
+  end
 end
