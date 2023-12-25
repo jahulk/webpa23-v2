@@ -14,8 +14,7 @@ class BeermappingApi
 
     response = HTTParty.get "#{url}#{id}"
     place = response.parsed_response["bmp_locations"]["location"]
-
-    return nil if place['id'] == 0
+    return nil if place['id'] == "0"
 
     return Place.new(place) if place.is_a?(Hash)
   end
