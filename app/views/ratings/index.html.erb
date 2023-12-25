@@ -1,6 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h2>List of ratings</h2>
+<p>Total ratings: <%= Rating.count %></p>
 
 <ul>
   <% @ratings.each do |rating| %>
