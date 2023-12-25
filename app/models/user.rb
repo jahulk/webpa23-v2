@@ -27,7 +27,7 @@ class User < ApplicationRecord
       .group_by { |r| r.beer.style }
       .transform_values { |value|
         sum = value.reduce(0.to_d) { |acc, cur| acc + cur.score }
-        avg = value.empty? ? 0 : sum / value.count
+        avg = value.empty? ? 0 : sum * 1.0 / value.count
         avg.to_f
       }.max_by { |_key, value| value }[0]
   end
@@ -39,7 +39,7 @@ class User < ApplicationRecord
       .group_by { |r| r.beer.brewery }
       .transform_values { |value|
         sum = value.reduce(0.to_d) { |acc, cur| acc + cur.score }
-        avg = value.empty? ? 0 : sum / value.count
+        avg = value.empty? ? 0 : sum * 1.0 / value.count
         avg.to_f
       }.max_by { |_key, value| value }[0]
   end

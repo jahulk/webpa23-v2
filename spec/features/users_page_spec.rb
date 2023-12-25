@@ -33,4 +33,23 @@ describe "User" do
       click_button('Create User')
     }.to change{User.count}.by(1)
   end
+
+  it "'s ratings are rendered on user's profile page" do
+    brewery = FactoryBot.create :brewery, name: "Koff"
+    beer1 = FactoryBot.create :beer, name: "iso 3", brewery:brewery
+    beer2 = FactoryBot.create :beer, name: "Karhu", brewery:brewery
+    user2 = FactoryBot.create :user, username: "Makke"
+    user3 = FactoryBot.create :user, username: "Seppo"
+    rating1 = FactoryBot.create :rating, score: 10, beer: beer1, user: user2
+    rating2 = FactoryBot.create :rating, score: 7, beer: beer1, user: user2
+    rating3 = FactoryBot.create :rating, score: 15, beer: beer2, user: user3
+
+    sign_in(username: "Makke", password: "Foobar1")
+    visit user_path(user2)
+    expect(page).to have_content(user2.username)
+    expect(page).to have_content("Has made 2 ratings, average rating 8.5")
+    expect(page).to have_content("#{rating1.beer.name} #{rating1.score} Delete")
+    expect(page).to have_content("#{rating2.beer.name} #{rating2.score} Delete")
+
+  end
 end
