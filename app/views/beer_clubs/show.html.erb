@@ -14,9 +14,14 @@
 
 <% if current_user %>
   <% if @beer_club.members.include?(current_user) %>
-    <p>you are already a member of this club</p>
+    <div>
+      <%= form_with url: membership_path(@membership.id), method: :delete do |form| %>
+        <%= form.hidden_field :beer_club_id, value: @beer_club.id %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.submit "End the membership" %>
+      <% end %>
+    </div>
   <% else %>
-    <p>you are not a member of this club</p>
     <div>
       <%= form_with(model: @membership) do |form| %>
         <%= form.hidden_field :beer_club_id, value: @beer_club.id %>

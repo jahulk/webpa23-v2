@@ -11,6 +11,10 @@ class BeerClubsController < ApplicationController
   def show
     @membership = Membership.new
     @membership.beer_club = @beer_club
+
+    if @beer_club.members.include?(current_user)
+      @membership = Membership.find_by(beer_club_id: @beer_club.id, user_id: current_user.id)
+    end
   end
 
   # GET /beer_clubs/new
