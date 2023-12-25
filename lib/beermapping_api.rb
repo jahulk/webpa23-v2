@@ -1,7 +1,23 @@
 class BeermappingApi
+
+  def self.place_with_id(id)
+    Rails.cache.fetch(id, expires_in: 7.days) { get_place_with_id(id) }
+  end
+
   def self.places_in(city)
     city = city.downcase
-    Rails.cache.fetch(city, expires_in: 7.days ) { get_places_in(city) }
+    Rails.cache.fetch(city, expires_in: 7.days) { get_places_in(city) }
+  end
+
+  def self.get_place_with_id(id)
+    url = "http://beermapping.com/webservice/locquery/#{key}/"
+
+    response = HTTParty.get "#{url}#{id}"
+    place = response.parsed_response["bmp_locations"]["location"]
+
+    return nil if place['id'] == 0
+
+    return Place.new(place) if place.is_a?(Hash)
   end
 
   def self.get_places_in(city)
@@ -19,6 +35,9 @@ class BeermappingApi
   end
 
   def self.key
-    "e6709b9e9500ed1a8fa5b5b3f966775e"
+    return nil if Rails.env.test?
+    raise 'BEERMAPPING_APIKEY env variable not defined' if ENV['BEERMAPPING_APIKEY'].nil?
+
+    ENV.fetch('BEERMAPPING_APIKEY')
   end
 end
