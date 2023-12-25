@@ -80,6 +80,7 @@ group :test do
   gem "webdrivers"
   gem 'launchy'
   gem 'simplecov', require: false
+  gem 'rubocop', '~> 1.59'
 end
 
 group :development, :test do
