@@ -1,15 +1,22 @@
-
-
 <h1>Styles</h1>
 
-<ul class="list-group list-group-flush">
-  <% @styles.each do |style| %>
-      <li class="list-group-item">
-        <%= link_to style.name, style_path(style) %>
-      </li>
+<div id="styles">
+  <ul class="list-group list-group-flush">
+    <%= turbo_frame_tag "styles" do %>
+      <% @styles.each do |style| %>
+        <li class="list-group-item">
+          <%= link_to style.name, style, data: { turbo_frame: "style_details" } %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <%= turbo_frame_tag "style_details" do %>
   <% end %>
-</ul>
+</div>
 
 <!--<p>-->
 <%#= link_to "New style", new_style_path %>
 <!--</p>-->
+
+<br><br>

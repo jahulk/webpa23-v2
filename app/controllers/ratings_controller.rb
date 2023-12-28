@@ -8,6 +8,13 @@ class RatingsController < ApplicationController
     @most_active_users = User.most_active
   end
 
+  def show
+    @rating = Rating.find(params[:id])
+    if turbo_frame_request?
+      render partial: 'details', locals: { rating: @rating }
+    end
+  end
+
   def new
     @rating = Rating.new
     @beers = Beer.all

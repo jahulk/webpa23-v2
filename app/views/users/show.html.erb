@@ -33,18 +33,22 @@
 <div>
   <h3>ratings</h3>
   <ul>
-    <% @user.ratings.each do |rating| %>
-      <li>
-        <%= rating.to_s %>
-        <% if @user == current_user %>
-          <%= link_to "Delete", rating, data: {
-            "turbo-method": :delete,
-            "turbo_confirm": "Are you sure?"
-          } %>
-        <% end %>
-      </li>
+    <%= turbo_frame_tag "ratings" do %>
+      <% @user.ratings.each do |rating| %>
+        <li>
+          <%= link_to rating.to_s, rating, data: { turbo_frame: 'rating_details' } %>
+          <% if @user == current_user %>
+            <%= link_to "Delete", rating, data: {
+              "turbo-method": :delete,
+              "turbo_confirm": "Are you sure?"
+            } %>
+          <% end %>
+        </li>
+      <% end %>
     <% end %>
   </ul>
+  <%= turbo_frame_tag "rating_details" do %>
+  <% end %>
 </div>
 <div>
   <% if @user == current_user or current_user.admin? %>
