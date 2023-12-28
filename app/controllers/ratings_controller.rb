@@ -1,11 +1,22 @@
 class RatingsController < ApplicationController
+  PAGE_SIZE = 5
+
   def index
-    @ratings = Rating.all
-    @recent_ratings = Rating.recent
+    # @recent_ratings = Rating.recent
     @best_beers = Beer.best_beers
     @best_breweries = Brewery.best_breweries
     @best_styles = Style.best_styles
     @most_active_users = User.most_active
+
+    @order = params[:order] || "desc"
+    @page = params[:page]&.to_i || 1
+    @last_page = (1.0 * Rating.count / PAGE_SIZE).ceil
+    offset = (@page - 1) * PAGE_SIZE
+
+    @ratings = case @order
+               when "desc" then Rating.order(created_at: :desc).limit(PAGE_SIZE).offset(offset)
+               when "asc" then Rating.order(created_at: :asc).limit(PAGE_SIZE).offset(offset)
+               end
   end
 
   def show

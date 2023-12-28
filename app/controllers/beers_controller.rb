@@ -4,17 +4,26 @@ class BeersController < ApplicationController
   before_action :set_breweries_and_styles, only: %i[new edit create]
   before_action :ensure_that_admin, only: [:destroy]
 
+  PAGE_SIZE = 5
+
   # GET /beers or /beers.json
   def index
-    @beers = Beer.all
+    @order = params[:order] || 'name'
+    @page = params[:page]&.to_i || 1
+    @last_page = (Beer.count / PAGE_SIZE).ceil
+    offset = (@page - 1) * PAGE_SIZE
 
-    order = params[:order] || 'name'
-
-    @beers = case order
-             when "name" then @beers.sort_by(&:name)
-             when "brewery" then @beers.sort_by { |b| b.brewery.name }
-             when "style" then @beers.sort_by { |b| b.style.name }
-             when "rating" then @beers.sort_by(&:average_rating).reverse
+    @beers = case @order
+             when "name" then Beer.order(:name)
+                                  .limit(PAGE_SIZE).offset(offset)
+             when "brewery" then Beer.joins(:brewery)
+                                     .order("breweries.name").limit(PAGE_SIZE).offset(offset)
+             when "style" then Beer.joins(:style)
+                                   .order("styles.name").limit(PAGE_SIZE).offset(offset)
+             when "rating" then Beer.left_joins(:ratings)
+                                    .select("beers.*, avg(ratings.score)")
+                                    .group("beers.id")
+                                    .order("avg(ratings.score) DESC").limit(PAGE_SIZE).offset(offset)
              end
   end
 
