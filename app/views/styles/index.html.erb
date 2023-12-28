@@ -2,15 +2,13 @@
 
 <h1>Styles</h1>
 
-<div>
+<ul class="list-group list-group-flush">
   <% @styles.each do |style| %>
-    <div>
-      <p>
+      <li class="list-group-item">
         <%= link_to style.name, style_path(style) %>
-      </p>
-    </div>
+      </li>
   <% end %>
-</div>
+</ul>
 
 <!--<p>-->
 <%#= link_to "New style", new_style_path %>

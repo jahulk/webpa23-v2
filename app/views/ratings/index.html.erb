@@ -3,9 +3,9 @@
 <h1>List of ratings</h1>
 <p>Total ratings: <%= Rating.count %></p>
 
-<ul>
+<ul class="list-group list-group-flush mb-2">
   <% @ratings.each do |rating| %>
-    <li>
+    <li class="list-group-item">
       <%= rating.to_s %>
       <%= link_to rating.user.username, rating.user %>
     </li>
