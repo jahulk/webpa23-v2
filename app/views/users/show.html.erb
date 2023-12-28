@@ -6,7 +6,7 @@
   <% if @user.ratings.empty? %>
     <p>Has not made any ratings yet!</p>
   <% else %>
-    <p>Has made <%= pluralize(@user.ratings.count, 'rating') %>, average rating <%= @user.average_rating %></p>
+    <p>Has made <%= pluralize(@user.ratings.count, 'rating') %>, average rating <%= round(@user.average_rating) %></p>
     <p>Favorite style is <%= @user.favorite_style.name %></p>
   <% end %>
 </div>
