@@ -1,5 +1,4 @@
 class BeermappingApi
-
   def self.place_with_id(id)
     Rails.cache.fetch(id, expires_in: 7.days) { get_place_with_id(id) }
   end
@@ -16,7 +15,7 @@ class BeermappingApi
     place = response.parsed_response["bmp_locations"]["location"]
     return nil if place['id'] == "0"
 
-    return Place.new(place) if place.is_a?(Hash)
+    Place.new(place) if place.is_a?(Hash)
   end
 
   def self.get_places_in(city)
@@ -25,7 +24,7 @@ class BeermappingApi
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
     places = response.parsed_response["bmp_locations"]["location"]
 
-    return [] if places.is_a?(Hash) and places['id'].nil?
+    return [] if places.is_a?(Hash) && places['id'].nil?
 
     places = [places] if places.is_a?(Hash)
     places.map do |place|

@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 
   def toggle_activity
     user = User.find(params[:id])
-    user.update_attribute :active, (not user.active)
+    user.update_attribute :active, !user.active
 
     redirect_to users_path, notice: "User #{user.username} activity status changed to #{user.active}"
   end

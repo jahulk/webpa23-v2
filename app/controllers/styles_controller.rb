@@ -14,8 +14,8 @@ class StylesController < ApplicationController
 
     redirect_to styles_path
   end
+
   def set_style
     @style = Style.find(params[:id])
   end
-
 end

@@ -1,5 +1,4 @@
 class WeatherApi
-
   def self.weather_in(city)
     city = city.downcase
     Rails.cache.fetch("weather_#{city}", expires_in: 5.minutes) { get_weather_in(city) }
@@ -11,8 +10,7 @@ class WeatherApi
     response = HTTParty.get "#{url}#{ERB::Util.url_encode(city)}"
     return nil if response.parsed_response["success"] == false
 
-    weather = OpenStruct.new(response.parsed_response["current"])
-    return weather
+    OpenStruct.new(response.parsed_response["current"])
   end
 
   def self.key

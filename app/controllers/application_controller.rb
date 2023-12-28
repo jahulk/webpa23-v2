@@ -12,6 +12,6 @@ class ApplicationController < ActionController::Base
   end
 
   def ensure_that_admin
-    redirect_to breweries_path, notice: 'you need admin permissions' if (current_user.nil? || !current_user.admin?)
+    redirect_to breweries_path, notice: 'you need admin permissions' if current_user.nil? || !current_user.admin?
   end
 end
