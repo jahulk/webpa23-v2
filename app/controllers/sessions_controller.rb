@@ -7,6 +7,10 @@ class SessionsController < ApplicationController
     user = User.find_by username: params[:username]
 
     if user&.authenticate(params[:password])
+      unless user.active
+        redirect_to signin_path, notice: "Your account is closed, please contact admin"
+        return
+      end
       session[:user_id] = user.id
       redirect_to user_path(user), notice: "Welcome back!"
     else

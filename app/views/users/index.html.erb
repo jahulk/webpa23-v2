@@ -1,14 +1,21 @@
-
-
 <h1>Users</h1>
 
 <div id="users">
   <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+    <% if user.active or current_user.admin? %>
+      <div>
+        <p>
+          <strong>Username:</strong>
+          <%= user.username %>
+          <% unless user.active %>
+            <span class="badge bg-primary">disabled</span>
+          <% end %>
+        </p>
+        <p>
+          <%= link_to "Show this user", user %>
+        </p>
+      </div>
+    <% end %>
   <% end %>
 </div>
-
 <%= link_to "New user", new_user_path %>

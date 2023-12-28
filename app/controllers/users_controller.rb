@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-
+  before_action :ensure_that_admin, only: %i[toggle_activity]
+  before_action :ensure_that_signed_in, except: %i[new create]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -59,6 +60,13 @@ class UsersController < ApplicationController
     # respond_to do |format|
     #   format.html { redirect_to users_url, notice: "User was successfully destroyed." }
     #   format.json { head :no_content }
+  end
+
+  def toggle_activity
+    user = User.find(params[:id])
+    user.update_attribute :active, (not user.active)
+
+    redirect_to users_path, notice: "User #{user.username} activity status changed to #{user.active}"
   end
 
   private
