@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<div>
+  <p>
+    <strong>Name: </strong><%= @style.name %>
+  </p>
+  <p>
+    <strong>Description: </strong><%= @style.description %>
+  </p>
+  <ul>
+    <h4>beers:</h4>
+    <% @style.beers.each do |beer| %>
+      <li><%= beer.name %></li>
+    <% end %>
+  </ul>
+</div>
+
+<%= link_to 'List of styles', styles_path %>
+

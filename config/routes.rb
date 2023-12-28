@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'styles', to: 'styles#index'
+  get 'styles/:id', to: 'styles#show', as: 'style'
   # get 'ratings', to: 'ratings#index'
   # get 'ratings/new', to:'ratings#new'
   # post 'ratings', to: 'ratings#create'
