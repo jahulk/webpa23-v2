@@ -98,4 +98,4 @@ gem "dockerfile-rails", ">= 1.6", :group => :development
 gem 'bootstrap', '~> 5.2.0'
 gem 'jquery-rails'
 #gem 'therubyracer'
-#gem 'mini_racer'
+gem 'mini_racer'
