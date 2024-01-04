@@ -51,6 +51,12 @@
   <% end %>
 </div>
 <div>
+  <%= turbo_frame_tag "beer_recommendation_tag", src: recommendation_user_path do %>
+    calculating the recommendation...
+  <% end %>
+</div>
+
+<div>
   <% if @user == current_user or current_user.admin? %>
     <%= link_to "Edit this user", edit_user_path(@user) %> |
   <% end %>

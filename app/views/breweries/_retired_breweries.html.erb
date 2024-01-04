@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "retired_breweries_tag" do %>
+  <h2>Retired</h2>
+
+  <p> Number of retired breweries: <%= breweries.count %> </p>
+  <% breweries.each do |brewery| %>
+    <p>
+      <strong>Name: </strong> <%= link_to brewery.name, brewery, data: { turbo_frame: "_top" } %>
+    </p>
+    <p>
+      <strong>Year: </strong> <%= brewery.year %>
+    </p>
+  <% end %>
+<% end %>

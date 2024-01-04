@@ -1,0 +1,16 @@
+<div>
+  <%= turbo_frame_tag "active_breweries_tag", src: active_breweries_path do %>
+
+    <p>
+      Loading active breweries...
+    </p>
+  <% end %>
+
+
+  <%= turbo_frame_tag "retired_breweries_tag", src: retired_breweries_path do %>
+    <p>
+      Loading retired breweries...
+    </p>
+
+  <% end %>
+</div>

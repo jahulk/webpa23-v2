@@ -69,6 +69,18 @@ class BreweriesController < ApplicationController
     redirect_to brewery, notice: "brewery activity status changed to #{new_status}"
   end
 
+  def active
+    sleep(2)
+    active_breweries = Brewery.active
+    render partial: 'breweries', locals: { breweries: active_breweries, type: "active" }
+  end
+
+  def retired
+    sleep(2)
+    retired_breweries = Brewery.retired
+    render partial: 'breweries', locals: { breweries: retired_breweries, type: "retired" }
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

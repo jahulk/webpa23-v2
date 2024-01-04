@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "#{type}_breweries_tag" do %>
+  <h2><%= type.capitalize %></h2>
+
+  <p> Number of <%= type %> breweries: <%= breweries.count %> </p>
+  <% breweries.each do |brewery| %>
+    <p>
+      <strong>Name: </strong> <%= link_to brewery.name, brewery, data: { turbo_frame: "_top" } %>
+    </p>
+    <p>
+      <strong>Year: </strong> <%= brewery.year %>
+    </p>
+  <% end %>
+<% end %>
