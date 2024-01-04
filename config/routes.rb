@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'places', to: 'places#index'
   post 'places', to: 'places#search'
   get 'beerlist', to: 'beers#list'
+  get 'chat', to: 'messages#index'
+  post 'messages', to: 'messages#create'
   # Defines the root path route ("/")
   # root "articles#index"
   root 'breweries#index'

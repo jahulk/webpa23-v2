@@ -1,8 +1,9 @@
 <h1>Breweries</h1>
 
+<%= turbo_stream_from "breweries_index" %>
 <%= render "brewery_list", active_breweries: @active_breweries, retired_breweries: @retired_breweries %>
 
 <p>
   <%= link_to "List of beers", beers_path %>
 </p>
-<%= link_to("New brewery", new_brewery_path, class: "btn btn-primary") if current_user %>
+<%= turbo_frame_tag "new_brewery", src: new_brewery_path if current_user %>

@@ -7,6 +7,7 @@ class BreweriesController < ApplicationController
   def index
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
+    # @breweries = Brewery.all
   end
 
   # GET /breweries/1 or /breweries/1.json
@@ -16,6 +17,9 @@ class BreweriesController < ApplicationController
   # GET /breweries/new
   def new
     @brewery = Brewery.new
+    return unless turbo_frame_request?
+
+    render partial: 'new'
   end
 
   # GET /breweries/1/edit
@@ -28,6 +32,10 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
+        format.turbo_stream {
+          type = @brewery.active ? "active" : "retired"
+          render turbo_stream: turbo_stream.append("#{type}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
+        }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
@@ -70,13 +78,11 @@ class BreweriesController < ApplicationController
   end
 
   def active
-    sleep(2)
     active_breweries = Brewery.active
     render partial: 'breweries', locals: { breweries: active_breweries, type: "active" }
   end
 
   def retired
-    sleep(2)
     retired_breweries = Brewery.retired
     render partial: 'breweries', locals: { breweries: retired_breweries, type: "retired" }
   end

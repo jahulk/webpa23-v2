@@ -7,11 +7,7 @@ module ApplicationHelper
     return if current_user.nil?
 
     edit = link_to('Edit', url_for([:edit, item]), class: "btn btn-primary")
-    if current_user.admin?
-      del = link_to('Destroy', item, method: :delete,
-                                     form: { data: { turbo_confirm: "Are you sure ?" } },
-                                     class: "btn btn-danger")
-    end
+    del = link_to('Destroy', url_for(action: :destroy, id: item.id), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-danger")
     raw("#{edit} #{del}")
   end
 end

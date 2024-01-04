@@ -8,9 +8,9 @@ class StylesController < ApplicationController
   end
 
   def show
-    if turbo_frame_request?
-      render partial: 'details', locals: { style: @style }
-    end
+    return unless turbo_frame_request?
+
+    render partial: 'details', locals: { style: @style }
   end
 
   # def about

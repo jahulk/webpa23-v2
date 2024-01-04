@@ -12,6 +12,7 @@ class Brewery < ApplicationRecord
   scope :active, -> { where active: true }
   scope :retired, -> { where active: [nil, false] }
   scope :best_breweries, -> { all.sort_by(&:average_rating).reverse.take(3) }
+
   def print_report
     puts name
     puts "established at year #{year}"
@@ -21,5 +22,15 @@ class Brewery < ApplicationRecord
   def restart
     self.year = 2022
     puts "changed year to #{year}"
+  end
+
+  after_create_commit do
+    target_id = if active
+                  "active_brewery_rows"
+                else
+                  "retired_brewery_rows"
+                end
+
+    broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
   end
 end

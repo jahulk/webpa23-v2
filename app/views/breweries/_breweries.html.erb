@@ -2,12 +2,19 @@
   <h2><%= type.capitalize %></h2>
 
   <p> Number of <%= type %> breweries: <%= breweries.count %> </p>
-  <% breweries.each do |brewery| %>
-    <p>
-      <strong>Name: </strong> <%= link_to brewery.name, brewery, data: { turbo_frame: "_top" } %>
-    </p>
-    <p>
-      <strong>Year: </strong> <%= brewery.year %>
-    </p>
-  <% end %>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Founded</th>
+      <th>Beers</th>
+      <th>Rating</th>
+    </tr>
+    </thead>
+    <tbody id="<%= type %>_brewery_rows">
+    <% breweries.each do |brewery| %>
+      <%= render "brewery_row", brewery: brewery %>
+    <% end %>
+    </tbody>
+  </table>
 <% end %>

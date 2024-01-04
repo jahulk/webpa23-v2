@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_secure_password
 
   validates :username, uniqueness: true,
-                       length: { minimum: 3, maximum: 30 }
+            length: { minimum: 3, maximum: 30 }
 
   validates :password, length: { minimum: 4 }, format: { with: /\A(?=.*[A-Z])(?=.*[0-9]).{4,}\z/,
                                                          message: "must be atleast 4 characters and include one number and one uppercase letter" }
@@ -13,8 +13,9 @@ class User < ApplicationRecord
   has_many :beers, through: :ratings
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
+  has_many :messages, dependent: :destroy
 
-  scope :most_active, -> { all.sort_by{ |u| -u.ratings.count }.take(3) }
+  scope :most_active, -> { all.sort_by { |u| -u.ratings.count }.take(3) }
 
   def favorite_beer
     return nil if ratings.empty?

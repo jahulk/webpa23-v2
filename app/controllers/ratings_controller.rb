@@ -21,9 +21,9 @@ class RatingsController < ApplicationController
 
   def show
     @rating = Rating.find(params[:id])
-    if turbo_frame_request?
-      render partial: 'details', locals: { rating: @rating }
-    end
+    return unless turbo_frame_request?
+
+    render partial: 'details', locals: { rating: @rating }
   end
 
   def new
