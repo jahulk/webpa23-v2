@@ -37,7 +37,7 @@ class BreweriesController < ApplicationController
           count = @brewery.active ? Brewery.active.count : Brewery.retired.count
           render turbo_stream:
                    [turbo_stream.append("#{type}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery }),
-                    turbo_stream.replace("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
+                    turbo_stream.update("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
                    ]
         }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
@@ -73,7 +73,7 @@ class BreweriesController < ApplicationController
       format.turbo_stream {
         render turbo_stream:
                  [turbo_stream.remove(brewery),
-                  turbo_stream.replace("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
+                  turbo_stream.update("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
                  ]
       }
       format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }

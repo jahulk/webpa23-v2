@@ -2,7 +2,9 @@
   <h2><%= type.capitalize %></h2>
 
   <p> Number of <%= type %> breweries:
-    <span id=<%= "#{type}_breweries_count" %>><%= render "brewery_count", count: breweries.count %></span></p>
+    <span id=<%= "#{type}_breweries_count" %>>
+      <%= render "brewery_count", count: breweries.count %></span>
+  </p>
   <table class="table table-striped">
     <thead>
     <tr>

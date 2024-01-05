@@ -25,18 +25,33 @@ class Brewery < ApplicationRecord
   end
 
   after_destroy_commit do
+    count = active ? Brewery.active.count : Brewery.retired.count
+    target_id = if active
+                  "active_breweries_count"
+                else
+                  "retired_breweries_count"
+                end
+
     broadcast_remove_to "breweries_index"
+    broadcast_update_to "breweries_index", partial: "breweries/brewery_count", target: target_id, locals: { count: count }
   end
 
   after_create_commit do
+    count = active ? Brewery.active.count : Brewery.retired.count
     target_id = if active
                   "active_brewery_rows"
                 else
                   "retired_brewery_rows"
                 end
 
-    broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
-  end
+    target_count_id = if active
+                        "active_breweries_count"
+                      else
+                        "retired_breweries_count"
+                      end
 
+    broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
+    broadcast_update_to "breweries_index", partial: "breweries/brewery_count", target: target_count_id, locals: { count: count }
+  end
 
 end
