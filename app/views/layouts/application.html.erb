@@ -40,7 +40,10 @@
           <%= link_to 'styles', styles_path, { class: "nav-link" } %>
         </li>
         <li class="nav-item">
-          <%= link_to 'chat', chat_path , { class: "nav-link" } %>
+          <%= link_to 'tax calculator', calculator_path, { class: "nav-link" } %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'chat', chat_path, { class: "nav-link" } %>
         </li>
         <% if current_user %>
           <li class="nav-item dropdown">
@@ -57,7 +60,9 @@
               <li>
                 <%= link_to "Join a club", new_membership_path, { class: "dropdown-item" } %>
               </li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li>
                 <%= link_to "Sign out", signout_path, class: "dropdown-item text-danger", data: { turbo_method: :delete } %>
               </li>

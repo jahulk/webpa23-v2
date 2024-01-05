@@ -70,7 +70,6 @@ class UsersController < ApplicationController
   end
 
   def recommendation
-    sleep(2)
     ids = Beer.pluck(:id)
     random_beer = Beer.find(ids.sample)
     render partial: 'recommendation', locals: { beer: random_beer }

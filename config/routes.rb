@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   resources :styles do
     get 'about', on: :collection
   end
-  resources :ratings, only: [:index, :show, :new, :create, :destroy]
+  resources :ratings, only: [:index, :show, :new, :create]
+  delete 'ratings', to: 'ratings#destroy'
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -31,6 +32,7 @@ Rails.application.routes.draw do
   get 'beerlist', to: 'beers#list'
   get 'chat', to: 'messages#index'
   post 'messages', to: 'messages#create'
+  get 'calculator', to: 'misc#calculator'
   # Defines the root path route ("/")
   # root "articles#index"
   root 'breweries#index'

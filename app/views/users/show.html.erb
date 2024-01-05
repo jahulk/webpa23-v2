@@ -32,21 +32,7 @@
 </div>
 <div>
   <h3>ratings</h3>
-  <ul>
-    <%= turbo_frame_tag "ratings" do %>
-      <% @user.ratings.each do |rating| %>
-        <li>
-          <%= link_to rating.to_s, rating, data: { turbo_frame: 'rating_details' } %>
-          <% if @user == current_user %>
-            <%= link_to "Delete", rating, data: {
-              "turbo-method": :delete,
-              "turbo_confirm": "Are you sure?"
-            } %>
-          <% end %>
-        </li>
-      <% end %>
-    <% end %>
-  </ul>
+  <%= render partial: 'ratings' %>
   <%= turbo_frame_tag "rating_details" do %>
   <% end %>
 </div>

@@ -3,7 +3,7 @@
   <td><%= brewery.year %></td>
   <td><%= brewery.beers.count %></td>
   <td><%= round(brewery.average_rating) %></td>
-  <% if current_user %>
+  <%# if current_user %>
     <td><%= link_to("X", brewery, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove brewery #{brewery.name} and all beers associated with it?" }) %></td>
-  <% end %>
+  <%# end %>
 </tr>
