@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index]
+  before_action :ensure_that_signed_in, only: [:index, :create]
 
   def index
     @messages = Message.all.order(created_at: :desc)
@@ -13,7 +13,9 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        redirect_to chat_path
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.prepend("messages", partial: "message", locals: { message: @message })
+        }
       else
         format.html { render :index, status: :unprocessable_entity }
       end

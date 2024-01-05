@@ -1,5 +1,5 @@
 class BreweriesController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :active, :retired]
   before_action :set_brewery, only: %i[show edit update destroy]
   before_action :ensure_that_admin, only: [:destroy]
 
@@ -60,9 +60,13 @@ class BreweriesController < ApplicationController
 
   # DELETE /breweries/1 or /breweries/1.json
   def destroy
+    brewery = @brewery
     @brewery.destroy
 
     respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: turbo_stream.remove(brewery)
+      }
       format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
       format.json { head :no_content }
     end

@@ -1,29 +1,12 @@
 <h1>Beerchat</h1>
 
-<div>
-  <%= form_with(model: @message) do |form| %>
-    <% if @message.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h2>
+<%= turbo_frame_tag "new_message" do %>
+  <%= render "form", message: Message.new %>
+<% end %>
 
-        <ul>
-          <% @message.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div>
-      <%= form.text_field :content %>
-      <%= form.submit %>
-    </div>
+<%= turbo_stream_from "messages_index" %>
+<div id="messages">
+  <% @messages.each do |message| %>
+    <%= render "message", message: message %>
   <% end %>
 </div>
-
-<% @messages.each do |message| %>
-  <p>
-    <strong><%= message.user.username %>
-      : </strong><%= message.content %> <%= message.created_at.strftime('%d.%m.%Y %H:%M:%S') %>
-  </p>
-<% end %>
