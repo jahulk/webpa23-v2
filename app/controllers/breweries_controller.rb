@@ -34,7 +34,11 @@ class BreweriesController < ApplicationController
       if @brewery.save
         format.turbo_stream {
           type = @brewery.active ? "active" : "retired"
-          render turbo_stream: turbo_stream.append("#{type}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
+          count = @brewery.active ? Brewery.active.count : Brewery.retired.count
+          render turbo_stream:
+                   [turbo_stream.append("#{type}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery }),
+                    turbo_stream.replace("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
+                   ]
         }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
@@ -62,10 +66,15 @@ class BreweriesController < ApplicationController
   def destroy
     brewery = @brewery
     @brewery.destroy
+    type = brewery.active ? "active" : "retired"
+    count = brewery.active ? Brewery.active.count : Brewery.retired.count
 
     respond_to do |format|
       format.turbo_stream {
-        render turbo_stream: turbo_stream.remove(brewery)
+        render turbo_stream:
+                 [turbo_stream.remove(brewery),
+                  turbo_stream.replace("#{type}_breweries_count", partial: "brewery_count", locals: { count: count })
+                 ]
       }
       format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
       format.json { head :no_content }
