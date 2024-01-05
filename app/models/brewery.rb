@@ -24,6 +24,10 @@ class Brewery < ApplicationRecord
     puts "changed year to #{year}"
   end
 
+  after_destroy_commit do
+    broadcast_remove_to "breweries_index"
+  end
+
   after_create_commit do
     target_id = if active
                   "active_brewery_rows"
@@ -33,4 +37,6 @@ class Brewery < ApplicationRecord
 
     broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
   end
+
+
 end
