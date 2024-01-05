@@ -35,4 +35,11 @@ export default class extends Controller {
                 console.log(error);
             });
     }
+
+    selectAll(event) {
+        const checkboxes = document.querySelectorAll('input[name="ratings[]"]')
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = event.target.checked;
+        })
+    }
 }

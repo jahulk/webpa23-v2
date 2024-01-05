@@ -10,6 +10,7 @@
         </span>
       </div>
     <% end %>
+    <p><label>select all <input type="checkbox" id="select_all" data-action="ratings#selectAll"></label></p>
     <% if @user == current_user %>
       <button data-action="ratings#destroy">Delete selected</button>
     <% end %>
