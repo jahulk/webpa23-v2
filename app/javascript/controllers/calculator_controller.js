@@ -1,14 +1,24 @@
 import {Controller} from "@hotwired/stimulus";
 
 export default class extends Controller {
-    static targets = ["amount", "abv", "price",]
+    static targets = ["amount", "abv", "price", "custom"]
     static values = {vat: Number}
 
     calculate(event) {
         event.preventDefault();
-        const amount = parseFloat(this.amountTarget.value);
+        let amount = this.amountTarget.value
+        const customAmount = parseFloat(this.customTarget.value);
         const abv = parseFloat(this.abvTarget.value);
         const price = parseFloat(this.priceTarget.value);
+
+        if (amount === "Custom") {
+            amount = customAmount;
+        } else {
+            amount = parseFloat(amount);
+        }
+
+        console.log(amount);
+
         let alcoholTax = 0;
         switch (true) {
             case (abv < 0.5):
@@ -30,6 +40,7 @@ export default class extends Controller {
     reset(event) {
         event.preventDefault()
         this.amountTarget.options[0].selected = true;
+        this.customTarget.value = 0;
         this.abvTarget.value = 0;
         this.priceTarget.value = 0;
         document.getElementById("result").innerHTML = "";
