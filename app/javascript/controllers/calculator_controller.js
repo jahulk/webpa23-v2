@@ -37,12 +37,23 @@ export default class extends Controller {
         <p> ${taxPercentage.toFixed(1)} % of the price is taxes.</p>`
     }
 
+    change(event) {
+        let customInput = document.getElementById("customInput")
+
+        if (event.target.value === "Custom") {
+            customInput.style.display = "block";
+        } else {
+            customInput.style.display = "none";
+        }
+    }
+
     reset(event) {
         event.preventDefault()
         this.amountTarget.options[0].selected = true;
         this.customTarget.value = 0;
         this.abvTarget.value = 0;
         this.priceTarget.value = 0;
+        document.getElementById("customInput").style.display = "none";
         document.getElementById("result").innerHTML = "";
     }
 }
